@@ -72,6 +72,24 @@ cart.patch("/update/:id",authorization,async(req,res)=>{
     }
     })
 
+     cart.delete("/deleteall",authorization,async(req,res)=>{
+    let userID=req.body.userID
+    try{
+        let note=await CartModel.deleteMany({userID})
+        // let user=note.userID
+        // let user_making_req=req.body.userID
+        // if(user==user_making_req){
+        //     let data=await CartModel.findByIdAndDelete({_id:id})
+            res.send({msg:"deleted"})
+        // }
+        // else{
+        //     res.send("you are not authorized")  
+        // }
+    }catch(err){
+        console.log(err)
+    }
+    })
+
 module.exports={
     cart
 }
