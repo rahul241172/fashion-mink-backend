@@ -44,19 +44,29 @@ try{
 })
 
 users.post("/login",async(req,res)=>{
-    const {email,password}=req.body
+    const email=req.body.email
+    const password=req.body.password
     try{
         const data=await UserModel.find({email})
-        
         if(data.length>0){
+            console.log(password);
             bcrypt.compare(password,data[0].password,(err, result)=> {
-                if(result){
+                    if(err){
+                        res.status(400).send({message:err});
+                    }
+
+               if(result){
+                console.log(result);
                     var token= jwt.sign({userID:data[0]._id},"masai", {
                         expiresIn: '1h',
                      });
                      res.send({ msg: "Login Successful", token: token ,data})
                     
                 }
+                else{
+                    res.send({msg:"wrong credentials"})  
+                }
+
              });
         }
         else{

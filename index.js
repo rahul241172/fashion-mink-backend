@@ -3,13 +3,15 @@ const {connection}=require("./config/db")
 const {users}=require("./routes/user.router")
 const {products}=require("./routes/product.router") 
 const {cart}=require("./routes/cart.router") 
+require("dotenv").config()
 var cors = require('cors')
 
 
 const app=express()
 app.use(express.json())
-app.use(cors())
-require("dotenv").config()
+app.use(cors({
+origin:"*"
+}))
 
 
 
